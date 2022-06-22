@@ -1,9 +1,17 @@
 import { Text, View } from "react-native";
 
+import ExpensesList from "../components/ExpensesList";
+
+// data
+import TestData from "../test-data/test-data";
+
+// style
+import { GlobalStyles } from "../constants/styles";
+
 const RecentExpensesScreen = () => {
     return (
-        <View>
-            <Text>Recent Expenses</Text>
+        <View style={GlobalStyles.spacing2}>
+            <ExpensesList expenses={TestData} />
         </View>
     );
 };
