@@ -1,17 +1,16 @@
-import { Text, View } from "react-native";
+import { useContext } from "react";
+import { View } from "react-native";
 
 import ExpensesList from "../components/ExpensesList";
-
-// data
-import TestData from "../test-data/test-data";
-
-// style
 import { GlobalStyles } from "../constants/styles";
+import { ExpenseContext } from "../store/expense-context";
 
 const RecentExpensesScreen = () => {
+    const expensesContext = useContext(ExpenseContext);
+
     return (
         <View style={GlobalStyles.spacing2}>
-            <ExpensesList expenses={TestData} />
+            <ExpensesList expenses={expensesContext.expenses.slice(0, 3)} />
         </View>
     );
 };

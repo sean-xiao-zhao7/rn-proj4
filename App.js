@@ -7,7 +7,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import AllExpensesScreen from "./src/screens/AllExpensesScreen";
 import RecentExpensesScreen from "./src/screens/RecentExpensesScreen";
 import ExpenseScreen from "./src/screens/ExpenseScreen";
-import EditExpensesScreen from "./src/screens/EditExpensesScreen";
 
 // navigator obj
 const Stack = createStackNavigator();
@@ -18,6 +17,9 @@ import { GlobalStyles } from "./src/constants/styles";
 import { ScreenOptions } from "./src/constants/screenOptions";
 import { pressed } from "./src/constants/pressed";
 import IconButton from "./src/components/UI/IconButton";
+
+// context
+import { ExpenseContextProvider } from "./src/store/expense-context";
 
 const ViewExpensesTab = () => {
     return (
@@ -56,17 +58,6 @@ const ViewExpensesTab = () => {
             }}
         >
             <Tab.Screen
-                name="RecentExpensesScreen"
-                component={RecentExpensesScreen}
-                options={{
-                    title: "Recent Expenses",
-                    tabBarLabel: "Recent",
-                    tabBarIcon: ({ color }) => (
-                        <MaterialIcons name="timer" size={32} color={color} />
-                    ),
-                }}
-            />
-            <Tab.Screen
                 name="AllExpensesScreen"
                 component={AllExpensesScreen}
                 options={{
@@ -81,47 +72,56 @@ const ViewExpensesTab = () => {
                     ),
                 }}
             />
+            <Tab.Screen
+                name="RecentExpensesScreen"
+                component={RecentExpensesScreen}
+                options={{
+                    title: "Recent Expenses",
+                    tabBarLabel: "Recent",
+                    tabBarIcon: ({ color }) => (
+                        <MaterialIcons name="timer" size={32} color={color} />
+                    ),
+                }}
+            />
         </Tab.Navigator>
     );
 };
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator
-                initialRouteName={"ViewExpensesTab"}
-                screenOptions={{
-                    ...ScreenOptions,
-                }}
-            >
-                <Stack.Screen
-                    name="ViewExpensesTab"
-                    component={ViewExpensesTab}
-                    options={{ headerShown: false, title: "Home" }}
-                />
-                <Stack.Screen
-                    name="ExpenseScreen"
-                    component={ExpenseScreen}
-                    options={({ navigation }) => {
-                        return {
-                            title: "Expense",
-                            presentation: "modal",
-                            headerBackTitleVisible: false,
-                            headerBackImage: () => (
-                                <IconButton
-                                    name="close"
-                                    onPress={navigation.goBack}
-                                    style={pressed}
-                                />
-                            ),
-                        };
+        <ExpenseContextProvider>
+            <NavigationContainer>
+                <Stack.Navigator
+                    initialRouteName={"ViewExpensesTab"}
+                    screenOptions={{
+                        ...ScreenOptions,
                     }}
-                />
-                <Stack.Screen
-                    name="EditExpensesScreen"
-                    component={EditExpensesScreen}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+                >
+                    <Stack.Screen
+                        name="ViewExpensesTab"
+                        component={ViewExpensesTab}
+                        options={{ headerShown: false, title: "Home" }}
+                    />
+                    <Stack.Screen
+                        name="ExpenseScreen"
+                        component={ExpenseScreen}
+                        options={({ navigation }) => {
+                            return {
+                                title: "Expense",
+                                presentation: "modal",
+                                headerBackTitleVisible: false,
+                                headerBackImage: () => (
+                                    <IconButton
+                                        name="close"
+                                        onPress={navigation.goBack}
+                                        style={pressed}
+                                    />
+                                ),
+                            };
+                        }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </ExpenseContextProvider>
     );
 }
