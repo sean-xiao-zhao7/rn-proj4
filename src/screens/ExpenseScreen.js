@@ -1,16 +1,24 @@
-import { useContext, useLayoutEffect } from "react";
-import { View } from "react-native";
+import { useContext, useLayoutEffect, useState } from "react";
+import { Button, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 import MyText from "../components/UI/MyText";
 import { GlobalStyles } from "../constants/styles";
 import IconButton from "../components/UI/IconButton";
 import { ExpenseContext } from "../store/expense-context";
+import ExpenseForm from "../components/forms/ExpenseForm";
 
 const ExpenseScreen = ({ route, navigation }) => {
-    const expense = route.params?.expense;
-    const mode = route.params?.mode;
+    const expense = route.params?.expense ? route.params.expense : {};
     const expenseContext = useContext(ExpenseContext);
+    const [editMode, setEditMode] = useState(
+        route.params?.mode === "add" ? true : false
+    );
+
+    const addHandler = (expense) => {
+        expenseContext.addExpense(expense);
+        navigation.goBack();
+    };
 
     const deleteHandler = () => {
         expenseContext.deleteExpense(expense.id);
@@ -19,9 +27,10 @@ const ExpenseScreen = ({ route, navigation }) => {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            title: mode === "add" ? "New Expense" : "Edit Expense",
+            title:
+                route.params?.mode === "add" ? "New Expense" : "Edit Expense",
             headerRight: () => {
-                if (mode !== "add") {
+                if (route.params?.mode !== "add") {
                     return (
                         <IconButton
                             name="delete"
@@ -34,8 +43,10 @@ const ExpenseScreen = ({ route, navigation }) => {
         });
     }, [navigation]);
 
-    if (!expense) {
-        return null;
+    if (editMode) {
+        return (
+            <ExpenseForm expense={expense} submitHandlerCallback={addHandler} />
+        );
     }
 
     return (
@@ -71,6 +82,7 @@ const ExpenseScreen = ({ route, navigation }) => {
                 />
                 <MyText>{expense.amount}</MyText>
             </View>
+            <Button onPress={setEditMode(true)} title="Edit" />
         </View>
     );
 };

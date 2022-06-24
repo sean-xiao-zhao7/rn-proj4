@@ -3,7 +3,7 @@ import { Text } from "react-native";
 // styles
 import { GlobalStyles } from "../../constants/styles";
 
-const MyText = ({ children, size, weight }) => {
+const MyText = ({ children, size, weight, marginBottom }) => {
     let fontSize;
     switch (size) {
         case 1:
@@ -30,7 +30,11 @@ const MyText = ({ children, size, weight }) => {
             break;
     }
 
-    return <Text style={[fontSize, fontWeight]}>{children}</Text>;
+    return (
+        <Text style={[fontSize, fontWeight, { marginBottom: 5 }]}>
+            {children}
+        </Text>
+    );
 };
 
 export default MyText;
