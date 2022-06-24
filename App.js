@@ -7,7 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import AllExpensesScreen from "./src/screens/AllExpensesScreen";
 import RecentExpensesScreen from "./src/screens/RecentExpensesScreen";
 import ExpenseScreen from "./src/screens/ExpenseScreen";
-import ManageExpensesScreen from "./src/screens/manage/ManageExpensesScreen";
+import EditExpensesScreen from "./src/screens/EditExpensesScreen";
 
 // navigator obj
 const Stack = createStackNavigator();
@@ -116,8 +116,8 @@ export default function App() {
                     }}
                 />
                 <Stack.Screen
-                    name="ManageExpensesScreen"
-                    component={ManageExpensesScreen}
+                    name="EditExpensesScreen"
+                    component={EditExpensesScreen}
                 />
             </Stack.Navigator>
         </NavigationContainer>
