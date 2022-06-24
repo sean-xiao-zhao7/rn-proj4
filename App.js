@@ -44,7 +44,9 @@ const ViewExpensesTab = () => {
                             <IconButton
                                 name="playlist-add"
                                 onPress={() => {
-                                    navigation.navigate("ExpenseScreen");
+                                    navigation.navigate("ExpenseScreen", {
+                                        mode: "add",
+                                    });
                                 }}
                                 style={pressed}
                             />

@@ -12,7 +12,10 @@ const ExpenseDetails = (props) => {
     const navigation = useNavigation();
 
     const pressHandler = () => {
-        navigation.navigate("ExpenseScreen");
+        navigation.navigate("ExpenseScreen", {
+            expense: props.expense,
+            mode: "edit",
+        });
     };
 
     return (
