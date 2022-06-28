@@ -2,11 +2,19 @@ import { useContext, useLayoutEffect, useState } from "react";
 import { Button, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
+// comps
 import MyText from "../components/UI/MyText";
-import { GlobalStyles } from "../constants/styles";
 import IconButton from "../components/UI/IconButton";
-import { ExpenseContext } from "../store/expense-context";
 import ExpenseForm from "../components/forms/ExpenseForm";
+
+// styles
+import { GlobalStyles } from "../constants/styles";
+
+// context
+import { ExpenseContext } from "../store/expense-context";
+
+// helpers
+import { addExpenseHTTP } from "../util/http";
 
 const ExpenseScreen = ({ route, navigation }) => {
     const expense = route.params?.expense ? route.params.expense : {};
@@ -17,6 +25,7 @@ const ExpenseScreen = ({ route, navigation }) => {
 
     const addHandler = (expense) => {
         expenseContext.addExpense(expense);
+        addExpenseHTTP(expense);
         navigation.goBack();
     };
 

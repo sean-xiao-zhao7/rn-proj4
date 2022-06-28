@@ -9,10 +9,10 @@ const ExpenseForm = ({ expense, submitHandlerCallback }) => {
     const [state, setState] = useState({
         title: { value: expense.title ? expense.title : "", valid: true },
         duration: {
-            value: expense.duration ? expense.duration : null,
+            value: expense.duration ? expense.duration : "",
             valid: true,
         },
-        amount: { value: expense.amount ? expense.amount : null, valid: true },
+        amount: { value: expense.amount ? expense.amount : "", valid: true },
     });
 
     const updateState = (type, value) => {
@@ -29,6 +29,7 @@ const ExpenseForm = ({ expense, submitHandlerCallback }) => {
             title: state.title.value,
             duration: state.duration.value,
             amount: state.amount.value,
+            id: Math.random() + new Date().toDateString(),
         });
     };
 
